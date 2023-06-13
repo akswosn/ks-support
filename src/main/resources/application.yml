@@ -1,0 +1,108 @@
+server:
+  port: 8081
+spring:
+  main:
+    allow-bean-definition-overriding: true
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    mongodb:
+      database: kstadium_main
+      url: mongodb://explorer:explorer@dev-explorer-docdb.cluster-cysgddip6ijs.ap-northeast-2.docdb.amazonaws.com:27017/kstadium_main?ssl=true&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false
+      username: explorer
+      password: explorer
+    ksmain:
+      url: jdbc:mysql://rds-mysql-dev-kstadium-app.cluster-cysgddip6ijs.ap-northeast-2.rds.amazonaws.com:3306/kstadium_main?characterEncoding=utf8&allowMultiQueries=true
+      username: medium
+      password: medium@1234
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      validationQuery: SELECT 1
+      poolName: Mysqldb-HikariCP-Main
+      maxPoolSize: 100
+      leakDetectionThreshold: 30000
+    kstadium-web-db:
+      url: jdbc:mysql://rds-mysql-dev-kstadium-app.cluster-cysgddip6ijs.ap-northeast-2.rds.amazonaws.com:3306/kstadium_web_db?characterEncoding=utf8&allowMultiQueries=true
+      username: medium
+      password: medium@1234
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      validationQuery: SELECT 1
+      poolName: Mysqldb-HikariCP-Sub
+      maxPoolSize: 100
+      leakDetectionThreshold: 30000
+
+mongo:
+  ssl:
+    trustStore: classpath:cert/dev/rds-truststore.jks
+    trustStorePassword: kstadium123!
+---
+# ?? stg? dev ???
+spring:
+  config:
+    activate:
+      on-profile: stg
+  datasource:
+    mongodb:
+      database: kstadium_main
+      url: mongodb://explorer:iJlLfzzejJeuuzR@stg-explorer-docdb-3.cluster-crqtxrdsqxcz.ap-northeast-2.docdb.amazonaws.com:27017/kstadium_main?ssl=true&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false
+      username: explorer
+      password: iJlLfzzejJeuuzR
+    ksmain:
+      url: jdbc:mysql://app-cluster.cluster-custom-crqtxrdsqxcz.ap-northeast-2.rds.amazonaws.com:3306/kstadium_main?characterEncoding=utf8&allowMultiQueries=true
+      username: admin
+      password: E{cR8s4:*r%ac5&hhs
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      validationQuery: SELECT 1
+      poolName: Mysqldb-HikariCP-Main
+      maxPoolSize: 100
+      leakDetectionThreshold: 30000
+    kstadium-web-db:
+      url: jdbc:mysql://app-cluster.cluster-custom-crqtxrdsqxcz.ap-northeast-2.rds.amazonaws.com:3306/kstadium_web_db?characterEncoding=utf8&allowMultiQueries=true
+      username: admin
+      password: E{cR8s4:*r%ac5&hhs
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      validationQuery: SELECT 1
+      poolName: Mysqldb-HikariCP-Sub
+      maxPoolSize: 100
+      leakDetectionThreshold: 30000
+mongo:
+  ssl:
+    trustStore: classpath:cert/stage/rds-truststore.jks
+    trustStorePassword: kstadium123!
+---
+# prod read only RDB
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    mongodb:
+      database: kstadium_main
+      url: mongodb://explorer:zo1qXXJOXy8g@prd-explorer-docdb.cluster-crz6dd1osl2t.ap-southeast1.docdb.amazonaws.com:27017/kstadium_main?ssl=true&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false
+      username: explorer
+      password: zo1qXXJOXy8g
+    ksmain:
+      url: jdbc:mysql://rds-mysql-prd-kstadium-app.cluster-ro-crz6dd1osl2t.ap-southeast-1.rds.amazonaws.com:3306/kstadium_main?characterEncoding=utf8&allowMultiQueries=true
+      username: medium
+      password: medium@1234
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      validationQuery: SELECT 1
+      poolName: Mysqldb-HikariCP-Main
+      maxPoolSize: 100
+      leakDetectionThreshold: 30000
+    kstadium-web-db:
+      url: jdbc:mysql://rds-mysql-prd-kstadium-app.cluster-ro-crz6dd1osl2t.ap-southeast-1.rds.amazonaws.com:3306/kstadium_web_db?characterEncoding=utf8&allowMultiQueries=true
+      username: medium
+      password: medium@1234
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      validationQuery: SELECT 1
+      poolName: Mysqldb-HikariCP-Sub
+      maxPoolSize: 100
+      leakDetectionThreshold: 30000
+mongo:
+  ssl:
+    trustStore: classpath:cert/prod/rds-truststore.jks
+    trustStorePassword: kstadium123!
+---

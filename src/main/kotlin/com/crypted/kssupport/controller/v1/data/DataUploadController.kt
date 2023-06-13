@@ -14,11 +14,20 @@ import org.springframework.web.bind.annotation.RestController
 class DataUploadController(
     private val dataUploadService: DataUploadService
 ) {
-    private val logger = KotlinLogging.logger {}
+    private val log = KotlinLogging.logger {}
 
     @PostMapping("/proposal")
     fun proposal(): ResponseEntity<KstadimuResponseEntity>{
-        return KsResponse.KS_SUCCESS.toResponse()
+        try {
+            dataUploadService.proposalDataMigration()
+
+            return KsResponse.KS_SUCCESS.toResponse()
+        }
+        catch (e: Exception){
+            log.error("### /proposal ERROR ::: $e")
+            return KsResponse.KS_SERVER_INTERNAL_ERROR.toResponse()
+        }
+
     }
 
 

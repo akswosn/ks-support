@@ -29,39 +29,39 @@ class TbChProposalEntity(
     lastModifyDate: LocalDateTime?= null,
 ) {
     @Id
-    @Column(name = "member_user_id")
+    @Column(name = "INDEX_NUMBER")
     var indexNumber : Int? = indexNumber
-    @Column(name = "member_user_id")
+    @Column(name = "PROPOSAL_ID")
     var proposalId: String? = proposalId
-    @Column(name = "member_user_id")
+    @Column(name = "USER_ID")
     var userId: String? = userId
-    @Column(name = "member_user_id")
+    @Column(name = "TITLE")
     var title: String? = title
-    @Column(name = "member_user_id")
+    @Column(name = "CONTENT")
     var content: String? = content
-    @Column(name = "member_user_id")
+    @Column(name = "STATUS")
     var status: String? = status
-    @Column(name = "member_user_id")
+    @Column(name = "STATUS_DETAIL")
     var statusDetail: String? = statusDetail
-    @Column(name = "member_user_id")
+    @Column(name = "DISPLAY_YN")
     var displayYn: String? = displayYn
-    @Column(name = "member_user_id")
+    @Column(name = "DELETE_YN")
     var deleteYn: String? = deleteYn
-    @Column(name = "member_user_id")
+    @Column(name = "FORUM_URL")
     var forumUrl: String? = forumUrl
-    @Column(name = "member_user_id")
+    @Column(name = "AGREE_YN")
     var agreeYn: String? = agreeYn
-    @Column(name = "member_user_id")
+    @Column(name = "EXPIRATION_DATE")
     var expirationDate: LocalDateTime? = expirationDate
-    @Column(name = "member_user_id")
+    @Column(name = "TX_STATUS")
     var txStatus: String? = txStatus
-    @Column(name = "member_user_id")
+    @Column(name = "TX_RESPONSE_DATE")
     var txResponseDate: String? = txResponseDate
-    @Column(name = "member_user_id")
+    @Column(name = "TX_HASH")
     var txHash: String? = txHash
-    @Column(name = "member_user_id")
+    @Column(name = "FIRST_REGISTER_DATE")
     var firstRegisterDate: LocalDateTime? = firstRegisterDate
-    @Column(name = "member_user_id")
+    @Column(name = "LAST_MODIFY_DATE")
     var lastModifyDate: LocalDateTime? = lastModifyDate
 
 

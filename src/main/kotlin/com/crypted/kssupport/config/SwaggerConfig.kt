@@ -1,35 +1,20 @@
 package com.crypted.kssupport.config
-
+import io.swagger.v3.oas.annotations.OpenAPIDefinition
+import io.swagger.v3.oas.annotations.info.Info
+import org.springdoc.core.models.GroupedOpenApi
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import springfox.documentation.builders.ApiInfoBuilder
-import springfox.documentation.builders.PathSelectors
-import springfox.documentation.builders.RequestHandlerSelectors
-import springfox.documentation.service.ApiInfo
-import springfox.documentation.service.Contact
-import springfox.documentation.spi.DocumentationType
-import springfox.documentation.spring.web.plugins.Docket
 
+
+@OpenAPIDefinition(info = Info(title = "Ks Support App", description = "Ks Support  app api명세", version = "v1"))
 @Configuration
 class SwaggerConfig {
     @Bean
-    fun api(): Docket{
-        return Docket(DocumentationType.OAS_30)
-            .apiInfo(apiInfo())
-            .useDefaultResponseMessages(false)
-            .select()
-            .apis(RequestHandlerSelectors.basePackage("com.crypted.ks.support.kssupport"))
-            .paths(PathSelectors.any())
+    fun supportOpenApi(): GroupedOpenApi {
+        val paths = arrayOf("/api/v1/**")
+        return GroupedOpenApi.builder()
+            .group("Kstadium Support API v1")
+            .pathsToMatch(*paths)
             .build()
-
-    }
-
-    fun apiInfo() : ApiInfo {
-        return ApiInfoBuilder()
-            .title("API 문서 제목")
-            .description("API 상세소개 및 사용법")
-            .contact(Contact("Aiden", "x", "aiden.lim@crypted.co.kr"))
-            .version("1.0")
-            .build();
     }
 }

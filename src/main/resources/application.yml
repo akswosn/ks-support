@@ -4,6 +4,9 @@ spring:
   main:
     allow-bean-definition-overriding: true
   jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL57Dialect
     database-platform: org.hibernate.dialect.H2Dialect
     database: H2
     generate-ddl: false
@@ -14,8 +17,14 @@ spring:
       naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyHbmImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-
-
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG
 
 ---
 spring:
@@ -51,6 +60,11 @@ mongo:
   ssl:
     trustStore: classpath:cert/dev/rds-truststore.jks
     trustStorePassword: kstadium123!
+
+kstadium:
+  api:
+    ground-chain-service: http://internal-alb-dev-ks-ground-chain-service-1699932531.ap-northeast-2.elb.amazonaws.com:3000
+  time: 9
 ---
 # ?? stg? dev ???
 spring:
@@ -85,6 +99,11 @@ mongo:
   ssl:
     trustStore: classpath:cert/stage/rds-truststore.jks
     trustStorePassword: kstadium123!
+
+kstadium:
+  api:
+    ground-chain-service: http://internal-alb-stg-ks-ground-chain-service-648496499.ap-northeast-2.elb.amazonaws.com:3000
+  time: 9
 ---
 # prod read only RDB
 spring:
@@ -119,4 +138,9 @@ mongo:
   ssl:
     trustStore: classpath:cert/prod/rds-truststore.jks
     trustStorePassword: kstadium123!
+
+kstadium:
+  api:
+    ground-chain-service: http://internal-alb-dev-ks-ground-chain-service-1699932531.ap-northeast-2.elb.amazonaws.com:3000
+  time: 8
 ---

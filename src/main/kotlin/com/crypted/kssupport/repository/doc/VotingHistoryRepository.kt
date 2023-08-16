@@ -5,4 +5,5 @@ import org.bson.types.ObjectId
 import org.springframework.data.mongodb.repository.MongoRepository
 
 interface VotingHistoryRepository: MongoRepository<VotingHistoryEntity, ObjectId> {
+    fun findAllByProposalIdFromContract(proposalIdFromContract: String?): List<VotingHistoryEntity>
 }

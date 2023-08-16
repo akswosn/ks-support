@@ -6,9 +6,11 @@ import com.mongodb.client.MongoClient
 import com.mongodb.client.MongoClients
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.io.ClassPathResource
 import org.springframework.data.mongodb.MongoDatabaseFactory
+import org.springframework.data.mongodb.MongoTransactionManager
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter
@@ -90,6 +92,11 @@ class DocumentDatasourceConfig : AbstractMongoClientConfiguration() {
         return MongoTemplate(
             mongoClient(), databaseName
         )
+    }
+
+    @Bean
+    fun mongoTransactionManager(databaseFactory: MongoDatabaseFactory): MongoTransactionManager{
+        return MongoTransactionManager(databaseFactory)
     }
 
     override fun getMappingBasePackages(): MutableCollection<String> {

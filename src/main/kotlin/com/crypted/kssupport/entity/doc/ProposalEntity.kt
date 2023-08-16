@@ -16,7 +16,7 @@ class ProposalEntity (
     var checkpoint: ObjectId? = null,
     var memberId: Long? = null,
     var currency: Long? = null,
-    var deposit: BigDecimal? = null,
+    var deposit: String? = null,
     var txHash: String? = null,
     var txStatus: String? = null,
     var proposalIdFromContract: String? = null,
@@ -27,11 +27,13 @@ class ProposalEntity (
     var isDeleted: String? = null,
     var forumUrl: String? = null,
     var expirationDate: LocalDateTime? = null,
-
     var createdAt: LocalDateTime? = null,
     var updatedAt: LocalDateTime? = null,
-
     var userId: String? = null,
+
+    var endTxHash: String? = null,
+    var endStatus: String? = null,
+    var endCreateAt: LocalDateTime? = null
 ){
     override fun toString(): String {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE)

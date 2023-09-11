@@ -39,7 +39,7 @@ class DataMigrationController(
     }
 
     @Operation(
-        summary = "[Anyway] checkpoint, sosnapshot, votingpower API ",
+        summary = "[Anyway] sosnapshot API ",
         description = "proposal 사전 데이터 로드 API"
     )
     @GetMapping("/proposal/init")
@@ -90,6 +90,38 @@ class DataMigrationController(
     }
 
     @Operation(
+            summary = "[One Time] init proposal votingPower new MongoDB 마이그레이션",
+            description = ""
+    )
+    @PostMapping("/voting-power")
+    fun votingPower(): ResponseEntity<KstadimuResponseEntity>{
+        try {
+            var insertCount = dataMigrationService.updateVotingPower()
+
+            return KsResponse.KS_SUCCESS.toDataResponse(mapOf("insertCount" to insertCount))
+        }
+        catch (e: Exception){
+            log.error("### /voting-history ERROR ::: ${e.printStackTrace()}")
+            return KsResponse.KS_SERVER_INTERNAL_ERROR.toResponse()
+        }
+    }
+
+    @PostMapping("/so-voting-power")
+    fun soVotingPower(): ResponseEntity<KstadimuResponseEntity>{
+        try {
+            var insertCount = dataMigrationService.updateSoVotingPower()
+
+            return KsResponse.KS_SUCCESS.toDataResponse(mapOf("insertCount" to insertCount))
+        }
+        catch (e: Exception){
+            log.error("### /voting-history ERROR ::: ${e.printStackTrace()}")
+            return KsResponse.KS_SERVER_INTERNAL_ERROR.toResponse()
+        }
+    }
+
+    //TODO :: STG 이슈 대응 API
+
+    @Operation(
         summary = "[Anyway] proposal checkpoint update",
         description = "현재 proposal checkpoint 없는 데이터 체크포인트 조회 및 업데이트"
     )
@@ -114,6 +146,40 @@ class DataMigrationController(
     fun updateProposalIdForVotingHistory(): ResponseEntity<KstadimuResponseEntity>{
         try {
             var result = dataMigrationService.updateVotingHistoryAddToProposalId()
+
+            return KsResponse.KS_SUCCESS.toDataResponse(mapOf("result" to result))
+        }
+        catch (e: Exception){
+            log.error("### /voting-history ERROR ::: ${e.printStackTrace()}")
+            return KsResponse.KS_SERVER_INTERNAL_ERROR.toResponse()
+        }
+    }
+
+    @Operation(
+            summary = "[Anyway] voting history update(for voting power)",
+            description = "현재 투표(voting-history) voting power update"
+    )
+    @PostMapping("/voting-history/voting-power")
+    fun updateVotingHistoryForVotingPower(): ResponseEntity<KstadimuResponseEntity>{
+        try {
+            var result = dataMigrationService.updateVotingHistoryForVotingPower(null)
+
+            return KsResponse.KS_SUCCESS.toDataResponse(mapOf("result" to result))
+        }
+        catch (e: Exception){
+            log.error("### /voting-history ERROR ::: ${e.printStackTrace()}")
+            return KsResponse.KS_SERVER_INTERNAL_ERROR.toResponse()
+        }
+    }
+
+    @Operation(
+            summary = "[Anyway] voting history update(for voting power)",
+            description = "현재 투표(voting-history) voting power update"
+    )
+    @PostMapping("/voting-history/voting-power/{proposalId}")
+    fun updateVotingHistoryForVotingPower(@PathVariable("proposalId") proposalId: String): ResponseEntity<KstadimuResponseEntity>{
+        try {
+            var result = dataMigrationService.updateVotingHistoryForVotingPower(proposalId)
 
             return KsResponse.KS_SUCCESS.toDataResponse(mapOf("result" to result))
         }

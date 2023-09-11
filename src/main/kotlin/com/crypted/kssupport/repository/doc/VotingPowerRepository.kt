@@ -10,4 +10,6 @@ interface VotingPowerRepository : MongoRepository<VotingPowerEntity, ObjectId> {
 
     @Query("{'checkpoint' :  ?0}")
     fun findAllByCheckpoint(checkPoint: ObjectId): List<VotingPowerEntity>
+
+    fun findFirstByCheckpointAndSoIdAndMemberId(checkPoint: ObjectId, soId: Long, memberId: Long ):VotingPowerEntity?
 }

@@ -113,7 +113,7 @@ spring:
   datasource:
     mongodb:
       database: kstadium_main
-      url: mongodb://explorer:zo1qXXJOXy8g@prd-explorer-docdb.cluster-crz6dd1osl2t.ap-southeast1.docdb.amazonaws.com:27017/kstadium_main?ssl=true&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false
+      url: mongodb://explorer:zo1qXXJOXy8g@prd-explorer-docdb.cluster-crz6dd1osl2t.ap-southeast-1.docdb.amazonaws.com:27017/kstadium_main?ssl=true&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false
       username: explorer
       password: zo1qXXJOXy8g
     ksmain:
@@ -141,6 +141,6 @@ mongo:
 
 kstadium:
   api:
-    ground-chain-service: http://internal-alb-dev-ks-ground-chain-service-1699932531.ap-northeast-2.elb.amazonaws.com:3000
+    ground-chain-service: http://internal-alb-prd-ks-ground-chain-service-701057679.ap-southeast-1.elb.amazonaws.com:3000
   time: 8
 ---

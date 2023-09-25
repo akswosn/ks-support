@@ -11,6 +11,7 @@ import com.crypted.kssupport.utils.CommonUtils
 import mu.KotlinLogging
 import org.bson.types.ObjectId
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
@@ -18,8 +19,8 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.time.*
 import java.time.format.DateTimeFormatter
-import java.util.ArrayList
-import javax.swing.text.DateFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 @Service
 class DataMigrationService(
@@ -45,6 +46,8 @@ class DataMigrationService(
         var callDate = arrayListOf<String>()
         var result = arrayListOf<String>()
         var proposals = tbChProposalRepository.findAll()
+
+        proposals.reverse()
 
         if (proposals.isNotEmpty()) {
             for (asisProposal in proposals) {
@@ -79,11 +82,14 @@ class DataMigrationService(
     fun initProposalDataCallAPI(): List<String> {
         var callDate = arrayListOf<String>()
         var proposals = tbChProposalRepository.findAll()
+        proposals.reverse()
+
+        var isResult = false
         if (proposals.isNotEmpty()) {
             for (asisProposal in proposals) {
                 var paramDateStr =
-                        asisProposal.firstRegisterDate!!.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                var date = asisProposal.firstRegisterDate
+                        asisProposal.firstRegisterDate?.minusDays(1L)!!.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                var date = asisProposal.firstRegisterDate?.minusDays(1L)
                 var start = date!!.minusDays(1L)
                 var end = date!!
 
@@ -99,8 +105,13 @@ class DataMigrationService(
                         var somSnapshot = somSnapshotRepository.findAllByCheckpoint(checkpoint.id!!)
                         if (soSnapshot.isEmpty() || somSnapshot!!.isEmpty()) {
                             gndServiceApi.postSnapShots(paramDateStr)
+                            isResult = true
                         }
                     }
+                }
+
+                if(isResult){ //한번 실행후 진행하도록
+                    break
                 }
             }
         }
@@ -391,6 +402,11 @@ class DataMigrationService(
         var result = 0
 
         var somList = somSnapshotRepository.findAllByCheckpoint(checkPoint, 1L)
+
+        if(somList?.isEmpty() == true){
+            return 0
+        }
+
         somList = somList?.filter {
             it.sop?.compareTo(
                     BigDecimal(100L).scaleByPowerOfTen(18))!! > -1

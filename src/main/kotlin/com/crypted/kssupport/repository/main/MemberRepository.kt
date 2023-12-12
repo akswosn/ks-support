@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface MemberRepository: JpaRepository<MemberEntity, Long> {
     fun findByUserId(userId: String): MemberEntity?
+
+    fun findAllByAddressIn(list: List<String>) : List<MemberEntity>
 }

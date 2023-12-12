@@ -15,7 +15,7 @@ plugins {
     kotlin("plugin.spring") version "1.8.21"
 
 
-    kotlin("kapt") version "1.3.61" //Querydsl
+    kotlin("kapt") version "1.8.22" //Querydsl
     idea
 }
 
@@ -34,7 +34,7 @@ repositories {
     mavenLocal()
 
     maven {
-        url = uri("https://maven.pkg.github.com/the-medium/ks-common-java")
+        url = uri("https://maven.pkg.github.com/kstadium/ks-common-java")
         credentials {
             username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
             password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")

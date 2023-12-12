@@ -2,7 +2,7 @@ package com.crypted.kssupport.controller.v1.data
 
 import com.crypted.kscommon.response.KsResponse
 import com.crypted.kscommon.response.KstadimuResponseEntity
-import com.crypted.kssupport.service.DataMigrationService
+import com.crypted.kssupport.service.data.DataMigrationService
 import io.swagger.v3.oas.annotations.Operation
 import mu.KotlinLogging
 import org.springframework.http.ResponseEntity

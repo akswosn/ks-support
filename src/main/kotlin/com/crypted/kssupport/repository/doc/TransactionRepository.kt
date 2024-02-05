@@ -20,4 +20,18 @@ interface TransactionRepository : MongoRepository<TransactionEntity, ObjectId> {
 
     @Query(value = "{'blockNumber': {'\$gte': ?0, '\$lte': ?1}, 'to': ?2, 'functionName': ?3}", count = false)
     fun findAllByBlockNumberAndToAndFunctionName(start: Long, end: Long, to: String, functionName: String): List<TransactionEntity>
+
+
+//    @Query(value = "{'blockTimestamp': {'\$gte': ?0}, 'value': {'\$gt': ?1}, 'functionName': ?2}", count = false)
+//    fun findAllBlockTimestampAndToAndFunctionNameAndValue(start: Long, value: String ,functionName: String ): List<TransactionEntity>
+//
+//    @Query(value = "{'blockTimestamp': {'\$gte': ?0, '\$lte': ?1}, 'value': {'\$gt': ?2}, 'functionName': ?3}", count = false)
+//    fun findAllBlockTimestampAndToAndFunctionNameAndValue(start: Long, end: Long, value: String,functionName: String ): List<TransactionEntity>
+
+    @Query(value = "{'blockNumber': {'\$gte': ?0}, 'functionName': ?2}", count = false)
+    fun findAllBlockNumberAndToAndFunctionName(start: Long, functionName: String ): List<TransactionEntity>
+
+    @Query(value = "{'blockNumber': {'\$gte': ?0, '\$lte': ?1}, 'functionName': ?2}", count = false)
+    fun findAllBlockNumberAndToAndFunctionName(start: Long, end: Long, functionName: String ): List<TransactionEntity>
+
 }
